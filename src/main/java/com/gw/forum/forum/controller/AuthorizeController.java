@@ -2,16 +2,17 @@ package com.gw.forum.forum.controller;
 
 import com.gw.forum.forum.dto.AccessTokenDTO;
 import com.gw.forum.forum.dto.GitlabUser;
+import com.gw.forum.forum.mapper.UserMapper;
+import com.gw.forum.forum.model.User;
 import com.gw.forum.forum.provider.GitlabProvider;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import java.util.UUID;
 
 @Controller
 public class AuthorizeController {
@@ -19,17 +20,28 @@ public class AuthorizeController {
     private GitlabProvider gitlabProvider;
     @Autowired
     private AccessTokenDTO accessTokenDTO;
+    @Autowired
+    private UserMapper userMapper;
     @GetMapping("/callback")
-    public String callback(@RequestParam(name = "code")String code,
-                           @RequestParam(name = "state")String state,
-                           HttpServletRequest request ){
+    public String callback(@RequestParam(name = "code") String code,
+                           HttpServletResponse response){
         accessTokenDTO.setCode(code);
         String accessToken=gitlabProvider.getAccessToken(accessTokenDTO);
-        GitlabUser user=gitlabProvider.getUser(accessToken);
-        String name=user.getName();
-        System.out.println(name);
-        HttpSession session=request.getSession();
-        session.setAttribute("name",name);
+        GitlabUser gitlabUser=gitlabProvider.getUser(accessToken);
+        if(gitlabUser!=null){
+            String token= UUID.randomUUID().toString();
+
+//            创建获取cookie
+            Cookie cookie=new Cookie("token",token);
+            response.addCookie(cookie);
+            User user=new User();
+            user.setAccountid(gitlabUser.getId());
+            user.setName(gitlabUser.getName());
+            user.setToken(token);
+            user.setGmtcreate(System.currentTimeMillis());
+            user.setGmtmodified(user.getGmtcreate());
+            userMapper.insert(user);
+        }
         return "redirect:/";
     }
 }

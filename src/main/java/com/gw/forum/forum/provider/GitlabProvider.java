@@ -24,7 +24,6 @@ public class GitlabProvider {
             String[] strings=split[0].split(":");
             StringBuilder access_Token=new StringBuilder(strings[1]);
             String accessToken=access_Token.substring(1,access_Token.length()-1);
-            System.out.println(accessToken);
             return accessToken;
         } catch (IOException e) {
             e.printStackTrace();
