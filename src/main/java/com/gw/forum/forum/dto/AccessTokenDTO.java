@@ -1,5 +1,6 @@
 package com.gw.forum.forum.dto;
 
+import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 @Component
@@ -10,13 +11,6 @@ public class AccessTokenDTO {
     private String redirect_uri;
     private String code;
     private String grant_type;
-    public String getGrant_type() {
-        return grant_type;
-    }
-
-    public void setGrant_type(String grant_type) {
-        this.grant_type = grant_type;
-    }
 
     public String getClient_id() {
         return client_id;
@@ -50,4 +44,11 @@ public class AccessTokenDTO {
         this.code = code;
     }
 
+    public String getGrant_type() {
+        return grant_type;
+    }
+
+    public void setGrant_type(String grant_type) {
+        this.grant_type = grant_type;
+    }
 }

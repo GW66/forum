@@ -40,6 +40,7 @@ public class AuthorizeController {
             user.setToken(token);
             user.setGmtcreate(System.currentTimeMillis());
             user.setGmtmodified(user.getGmtcreate());
+            user.setAvatar_url(gitlabUser.getAvatar_url());
             userMapper.insert(user);
         }
         return "redirect:/";

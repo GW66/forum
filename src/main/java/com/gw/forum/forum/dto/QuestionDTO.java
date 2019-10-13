@@ -1,8 +1,9 @@
-package com.gw.forum.forum.model;
+package com.gw.forum.forum.dto;
 
+import com.gw.forum.forum.model.User;
 import lombok.Data;
 
-public class Question {
+public class QuestionDTO {
     private Integer id;
     private String title;
     private String description;
@@ -13,6 +14,7 @@ public class Question {
     private Integer view_count;
     private Integer like_count;
     private String tag;
+    private User user;
 
     public Integer getId() {
         return id;
@@ -92,5 +94,13 @@ public class Question {
 
     public void setTag(String tag) {
         this.tag = tag;
+    }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
     }
 }

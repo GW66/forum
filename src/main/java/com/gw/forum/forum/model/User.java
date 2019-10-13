@@ -1,5 +1,7 @@
 package com.gw.forum.forum.model;
 
+import lombok.Data;
+
 public class User {
     private Integer id;
     private String accountid;
@@ -7,6 +9,7 @@ public class User {
     private String token;
     private Long gmtcreate;
     private Long gmtmodified;
+    private String avatar_url;
 
     public Integer getId() {
         return id;
@@ -54,5 +57,13 @@ public class User {
 
     public void setGmtmodified(Long gmtmodified) {
         this.gmtmodified = gmtmodified;
+    }
+
+    public String getAvatar_url() {
+        return avatar_url;
+    }
+
+    public void setAvatar_url(String avatar_url) {
+        this.avatar_url = avatar_url;
     }
 }
