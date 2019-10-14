@@ -1,5 +1,6 @@
 package com.gw.forum.forum.service;
 
+import com.gw.forum.forum.dto.PaginationDTO;
 import com.gw.forum.forum.dto.QuestionDTO;
 import com.gw.forum.forum.mapper.QuestionMapper;
 import com.gw.forum.forum.mapper.UserMapper;
@@ -18,8 +19,9 @@ public class QuestionService {
     @Autowired
     private UserMapper userMapper;
 
-    public List<QuestionDTO> list(){
-        List<Question> questionList=questionMapper.list();
+    public List<QuestionDTO> listpage(Integer page,Integer size){
+        Integer startSize=(page-1)*size;
+        List<Question> questionList=questionMapper.listpage(startSize,size);
         List<QuestionDTO> questionDTOList=new ArrayList<>();
         for(Question question:questionList){
             User user=userMapper.findbyId(question.getCreator());
@@ -29,5 +31,10 @@ public class QuestionService {
             questionDTOList.add(questionDTO);
         }
         return questionDTOList;
+    }
+    public PaginationDTO showpage(Integer page, Integer size){
+        Integer totalCount=questionMapper.totalCount();
+        PaginationDTO paginationDTO=new PaginationDTO(page,totalCount,size);
+        return paginationDTO;
     }
 }

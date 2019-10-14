@@ -59,9 +59,36 @@
                     <div class="media-body">
                         <h4 class="media-heading" th:text="${question.title}"></h4>
                         <h5>问题 • <span th:text="${question.user.name}"></span> • 发起了问题</h5>
-                        <span class="text-color"><span th:text="${question.like_count}"></span>人关注 • <span th:text="${question.comment_count}"></span> 个回复 • <span th:text="${question.getView_count()}"></span> 次浏览 • <span th:text="${1}"></span>小时前</span>
+                        <span class="text-color"><span th:text="${question.like_count}"></span>人关注 • <span th:text="${question.comment_count}"></span> 个回复 • <span th:text="${question.getView_count()}"></span> 次浏览 • <span th:text="${#dates.format(question.gmt_create,'yyyy-MM-dd HH:mm')}"></span></span>
                     </div>
                 </div>
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li th:if="${paginationDTO.showFirstPage}">
+                            <a href="/?page=1" aria-label="Previous">
+                                <span aria-hidden="true">&lt;&lt;</span>
+                            </a>
+                        </li>
+                        <li th:if="${paginationDTO.showPrevious}">
+                            <a th:href="@{/(page=${paginationDTO.page -1})}" aria-label="Previous">
+                                <span aria-hidden="true">&lt;</span>
+                            </a>
+                        </li>
+                        <li th:each="page:${paginationDTO.getPages()}" th:class="${paginationDTO.page==page}?'active':''">
+                            <a th:href="@{/(page=${page})}" th:text="${page}"></a>
+                        </li>
+                        <li th:if="${paginationDTO.showNext}">
+                            <a th:href="@{/(page=${paginationDTO.page +1})}" aria-label="Next">
+                                <span aria-hidden="true">&gt;</span>
+                            </a>
+                        </li>
+                        <li th:if="${paginationDTO.showEndPage}">
+                            <a th:href="@{/(page=${paginationDTO.pageCount})}" aria-label="Next">
+                                <span aria-hidden="true">&gt;&gt;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
             </div>
             <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
                 <h3>问题发起指南</h3>
