@@ -18,7 +18,6 @@ public class QuestionService {
     private QuestionMapper questionMapper;
     @Autowired
     private UserMapper userMapper;
-
     public List<QuestionDTO> listpage(Integer page,Integer size){
         Integer startSize=(page-1)*size;
         List<Question> questionList=questionMapper.listpage(startSize,size);
@@ -36,5 +35,33 @@ public class QuestionService {
         Integer totalCount=questionMapper.totalCount();
         PaginationDTO paginationDTO=new PaginationDTO(page,totalCount,size);
         return paginationDTO;
+    }
+
+    public List<QuestionDTO> listpage(Integer creator,Integer page,Integer size){
+        Integer startSize=(page-1)*size;
+        List<Question> questionList=questionMapper.selflistpage(creator,startSize,size);
+        List<QuestionDTO> questionDTOList=new ArrayList<>();
+        for(Question question:questionList){
+            User user=userMapper.findbyId(question.getCreator());
+            QuestionDTO questionDTO=new QuestionDTO();
+            BeanUtils.copyProperties(question,questionDTO);
+            questionDTO.setUser(user);
+            questionDTOList.add(questionDTO);
+        }
+        return questionDTOList;
+    }
+    public PaginationDTO showpage(Integer creator,Integer page, Integer size){
+        Integer totalCount=questionMapper.selftotalCount(creator);
+        PaginationDTO paginationDTO=new PaginationDTO(page,totalCount,size);
+        return paginationDTO;
+    }
+
+    public QuestionDTO revertPage(Integer id) {
+        Question question=questionMapper.revertPage(id);
+        User user=userMapper.findbyId(question.getCreator());
+        QuestionDTO questionDTO=new QuestionDTO();
+        BeanUtils.copyProperties(question,questionDTO);
+        questionDTO.setUser(user);
+        return questionDTO;
     }
 }

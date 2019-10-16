@@ -15,8 +15,16 @@ public interface QuestionMapper {
     void create(Question question);
 //    @Select("select * from question")
 //    List<Question> list();
+//    所有问题
     @Select("select *from question LIMIT #{startSize},#{size}")
     List<Question> listpage(@Param("startSize") Integer startSize,@Param("size") Integer size);
     @Select("select count(*)from question")
     Integer totalCount();
+//  用户问题
+    @Select("select *from question where creator=#{creator} LIMIT #{startSize},#{size}")
+    List<Question> selflistpage(@Param("creator") Integer creator,@Param("startSize") Integer startSize,@Param("size") Integer size);
+    @Select("select count(*)from question where creator=#{creator}")
+    Integer selftotalCount(@Param("creator") Integer creator);
+    @Select("select *from question where id=#{id}")
+    Question revertPage(@Param("id") Integer id);
 }

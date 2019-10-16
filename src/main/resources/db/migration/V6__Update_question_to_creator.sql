@@ -1,0 +1,1 @@
+alter table question modify creator int(11) not null;

@@ -1,0 +1,1 @@
+alter table question modify creator varchar(100) not null;

@@ -29,3 +29,14 @@ mvn flyway:migrate<br>
 thymeleaf中:<br>
 input type="text"需要用 th:value<br>
 textarea需要用 th:text<br>
+
+一个页面的应用<br>
+创建navigation.html<br>
+
+编写<br>
+!DOCTYPE html<br>
+html xmlns:th="http://www.thymeleaf.org" <br>
+div th:fragment="nav"<br>
+引用<br>
+div th:insert="~{navigation::nav}"<br>
+

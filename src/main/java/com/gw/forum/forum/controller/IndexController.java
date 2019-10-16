@@ -36,7 +36,7 @@ public class IndexController {
                     if (user!=null){
                         //            创建session
                         HttpSession session=request.getSession();
-                        session.setAttribute("User",user);
+                        session.setAttribute("user",user);
                     }
                     break;
                 }

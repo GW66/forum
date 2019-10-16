@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>论坛</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/forum.css">
+    <link rel="stylesheet" href="/css/prodile.css">
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div th:insert="~{/other/navigation::user}"></div>
+<div class="container-fluid main">
+    <div class="row">
+        <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 all">
+            <div class="page-header underline">
+                <h4><span th:text="${questionDTO.title}"></span></h4><br>
+                <span class="text-color">
+                    作者：<span th:text="${questionDTO.user.name}"></span>|
+                    <span th:text="${questionDTO.like_count}"></span>人关注|
+                    <span th:text="${questionDTO.comment_count}"></span>个回复|
+                    浏览<span th:text="${questionDTO.getView_count()}"></span>次|
+                    发布时间：<span th:text="${#dates.format(questionDTO.gmt_create,'yyyy-MM-dd HH:mm')}"></span>
+                </span>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                123
+            </div>
+        </div>
+        <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <div class="media page-header underline">
+                    <h4>发起人</h4>
+                    <div class="media-left">
+                        <a >
+                            <img class="media-object img-rounded" th:src="${questionDTO.user.avatar_url}" >
+                        </a>
+                    </div>
+                    <div class="media-body middle">
+                        <a><h4 class="media-heading" th:text="${questionDTO.user.name}"></h4></a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+                <h4>相关问题</h4>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

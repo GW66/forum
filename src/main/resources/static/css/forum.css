@@ -12,7 +12,7 @@ body{
     margin-bottom: 15px;
 }
 .underline{
-    padding-bottom: 0px;
+    padding-bottom: 5px;
     border-bottom: 3px solid #eeee;
 }
 .all {
