@@ -17,7 +17,7 @@
 [maven](http://maven.apache.org/)<br>
 [mysql](https://www.mysql.com/)<br>
 [flyway](https://flywaydb.org/)<br>
-[lombok](https://projectlombok.org/)<br>
+[lombok](https://projectlombok.org/)(有一些注解可以用)<br>
 
 ##遇到的问题<br>
 springMVC中RequestParam注解中name和value两个属性的区别：<br>
@@ -40,3 +40,16 @@ div th:fragment="nav"<br>
 引用<br>
 div th:insert="~{navigation::nav}"<br>
 
+地址编写<br>
+@{'/revert/'+${question.id}}<br>
+@{./(page=${paginationDTO.page +1})}<br>
+
+css不加载问题
+是由于浏览器中把css进行了缓存，可以把缓存删除再试
+
+目前缺少<br>
+登录有一个功能没有完善<br>
+自动部署（热部署）没有添加<br>
+拦截器没有编写<br>
+mybatis generator的集成<br>
+使用 ControlerAdvice 和 ExceptionHandler 通用处理异常<br>

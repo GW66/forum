@@ -1,7 +1,6 @@
 package com.gw.forum.forum.controller;
 
 import com.gw.forum.forum.dto.QuestionDTO;
-import com.gw.forum.forum.mapper.QuestionMapper;
 import com.gw.forum.forum.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;

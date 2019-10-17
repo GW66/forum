@@ -1,7 +1,5 @@
 package com.gw.forum.forum.dto;
 
-import lombok.Data;
-
 public class GitlabUser {
     private String name;
     private String id;

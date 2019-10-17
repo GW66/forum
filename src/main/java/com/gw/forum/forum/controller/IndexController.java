@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
@@ -26,6 +27,7 @@ public class IndexController {
     public String index(@RequestParam(name = "page",defaultValue = "1")Integer page,
                         @RequestParam(name = "size",defaultValue = "6")Integer size,
                         HttpServletRequest request,
+                        HttpServletResponse response,
                         Model model){
 //        获取Cookie
         Cookie[] cookies=request.getCookies();
@@ -37,6 +39,10 @@ public class IndexController {
                         //            创建session
                         HttpSession session=request.getSession();
                         session.setAttribute("user",user);
+                    }else {
+                        Cookie token=new Cookie("token",null);
+                        token.setMaxAge(0);
+                        response.addCookie(token);
                     }
                     break;
                 }

@@ -1,13 +1,16 @@
 package com.gw.forum.forum.controller;
 
+import com.gw.forum.forum.dto.QuestionDTO;
 import com.gw.forum.forum.mapper.QuestionMapper;
 import com.gw.forum.forum.mapper.UserMapper;
 import com.gw.forum.forum.model.Question;
 import com.gw.forum.forum.model.User;
+import com.gw.forum.forum.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -20,6 +23,8 @@ public class PublishController {
     QuestionMapper questionMapper;
     @Autowired
     UserMapper userMapper;
+    @Autowired
+    QuestionService questionService;
     @GetMapping("/publish")
     public String publish(){
         return "publish";
@@ -28,6 +33,7 @@ public class PublishController {
     public  String doPublish(@RequestParam(name = "title",required = false)String title,
                              @RequestParam(name = "description",required = false)String description,
                              @RequestParam(name = "tag",required = false)String tag,
+                             @RequestParam(name = "id",required = false)Integer id,
                              HttpServletRequest request,
                              Model model){
         model.addAttribute("title",title);
@@ -45,13 +51,13 @@ public class PublishController {
                     User user=userMapper.findbytoken(cookie.getValue());
                     if(user!=null){
                         request.getSession().setAttribute("user",user);
+                        question.setId(id);
                         question.setCreator(user.getId());
                         question.setTitle(title);
                         question.setDescription(description);
                         question.setTag(tag);
                         question.setGmt_create(System.currentTimeMillis());
-                        question.setGmt_modified(question.getGmt_create());
-                        questionMapper.create(question);
+                        questionService.questionupdate(question);
                         return "redirect:/";
                     }else {
                         model.addAttribute("error","用户未登录");
@@ -59,6 +65,17 @@ public class PublishController {
                 }
             }
         }
+        model.addAttribute("error","用户未登录");
+        return "publish";
+    }
+    @GetMapping("/publish/{id}")
+    public String edit(@PathVariable("id")Integer id,
+                       Model model){
+        QuestionDTO question= questionService.revertPage(id);
+        model.addAttribute("title",question.getTitle());
+        model.addAttribute("description",question.getDescription());
+        model.addAttribute("tag",question.getTag());
+        model.addAttribute("id",question.getId());
         return "publish";
     }
 }

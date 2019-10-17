@@ -57,11 +57,20 @@ public class QuestionService {
     }
 
     public QuestionDTO revertPage(Integer id) {
-        Question question=questionMapper.revertPage(id);
+        Question question=questionMapper.questionbyid(id);
         User user=userMapper.findbyId(question.getCreator());
         QuestionDTO questionDTO=new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
         questionDTO.setUser(user);
         return questionDTO;
+    }
+    public void questionupdate(Question question){
+        if(question.getId()==null){
+            question.setGmt_modified(question.getGmt_create());
+            questionMapper.insert(question);
+        }else {
+            question.setGmt_modified(System.currentTimeMillis());
+            questionMapper.update(question);
+        }
     }
 }
