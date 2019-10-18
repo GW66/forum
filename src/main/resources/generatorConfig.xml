@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+        PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+        "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+    <context id="DB2Tables" targetRuntime="MyBatis3">
+        <!--增加limit功能-->
+        <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
+        <!--设置数据库信息-->
+        <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
+                        connectionURL="jdbc:mysql://localhost/forum?serverTimezone=GMT%2B8"
+                        userId="root"
+                        password="qwe789456321">
+            <property name="nullCatalogMeansCurrent" value="true"/>
+        </jdbcConnection>
+        <!--设置model-是否需要自己创建文件夹-是否剔除空格-->
+        <javaModelGenerator targetPackage="com.gw.forum.forum.model" targetProject="src\main\java">
+            <property name="enableSubPackages" value="true" />
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <!--设置mapper.xml文件-是否需要自己创建文件夹-->
+        <sqlMapGenerator targetPackage="mapper"  targetProject="src\main\resources">
+            <property name="enableSubPackages" value="true" />
+        </sqlMapGenerator>
+        <!--设置mapper接口文件-是否需要自己创建文件夹-->
+        <!--
+        客户端代码，生成易于使用的针对Model对象和XML配置文件的代码
+        type="ANNOTATEDMAPPER",生成Java Model和基于注解的Mapper对象
+        type="MIXEDMAPPER",生成基于注解的Java Model和相应的Mapper对象
+        type="XMLMAPPER",生成SQLMap XML文件和独立的Mapper接口
+        -->
+        <javaClientGenerator type="XMLMAPPER" targetPackage="com.gw.forum.forum.mapper"  targetProject="src\main\java">
+            <property name="enableSubPackages" value="true" />
+        </javaClientGenerator>
+        <!--设置表关联-->
+        <table schema="DB2ADMIN" tableName="user" domainObjectName="User" ></table>
+        <table schema="DB2ADMIN" tableName="question" domainObjectName="Question" ></table>
+
+    </context>
+</generatorConfiguration>

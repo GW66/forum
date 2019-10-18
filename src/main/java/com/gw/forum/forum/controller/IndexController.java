@@ -4,6 +4,7 @@ import com.gw.forum.forum.dto.PaginationDTO;
 import com.gw.forum.forum.dto.QuestionDTO;
 import com.gw.forum.forum.mapper.UserMapper;
 import com.gw.forum.forum.model.User;
+import com.gw.forum.forum.model.UserExample;
 import com.gw.forum.forum.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,11 +35,14 @@ public class IndexController {
         if(cookies!=null){
             for(Cookie cookie:cookies){
                 if(cookie.getName().equals("token")){
-                    User user=userMapper.findbytoken(cookie.getValue());
-                    if (user!=null){
+                    UserExample userExample = new UserExample();
+                    userExample.createCriteria()
+                            .andTokenEqualTo(cookie.getValue());
+                    List<User> users = userMapper.selectByExample(userExample);
+                    if (users.size()!=0){
                         //            创建session
                         HttpSession session=request.getSession();
-                        session.setAttribute("user",user);
+                        session.setAttribute("user",users.get(0));
                     }else {
                         Cookie token=new Cookie("token",null);
                         token.setMaxAge(0);

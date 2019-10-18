@@ -36,11 +36,10 @@ public class AuthorizeController {
             response.addCookie(cookie);
 //            数据
             User user=new User();
-            user.setAccountid(gitlabUser.getId());
+            user.setAccountId(gitlabUser.getId());
             user.setName(gitlabUser.getName());
             user.setToken(token);
-            user.setGmtcreate(System.currentTimeMillis());
-            user.setAvatar_url(gitlabUser.getAvatar_url());
+            user.setAvatarUrl(gitlabUser.getAvatar_url());
 //            用户存放
             userService.userUpdate(user);
         }
