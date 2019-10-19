@@ -9,6 +9,8 @@
 ##资料网站<br>
 [maven仓库](https://mvnrepository.com/)<br>
 [镜像资源](https://mirrors.tuna.tsinghua.edu.cn/)<br>
+[springboot文档](https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/)
+[Spring-boot 异常处理](https://www.jianshu.com/p/332f42fbabe2)
 
 ##项目使用工具<br>
 [springboot](https://spring.io/)<br>

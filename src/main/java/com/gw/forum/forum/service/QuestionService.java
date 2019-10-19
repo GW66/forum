@@ -2,6 +2,8 @@ package com.gw.forum.forum.service;
 
 import com.gw.forum.forum.dto.PaginationDTO;
 import com.gw.forum.forum.dto.QuestionDTO;
+import com.gw.forum.forum.exception.CustomizaErrorCode;
+import com.gw.forum.forum.exception.CustomizeException;
 import com.gw.forum.forum.mapper.QuestionMapper;
 import com.gw.forum.forum.mapper.UserMapper;
 import com.gw.forum.forum.model.Question;
@@ -63,6 +65,9 @@ public class QuestionService {
 
     public QuestionDTO revertPage(Integer id) {
         Question question=questionMapper.selectByPrimaryKey(id);
+        if (question==null){
+            throw new CustomizeException(CustomizaErrorCode.QUESTION_NOT_FOUND);
+        }
         User user = userMapper.selectByPrimaryKey(question.getCreator());
         QuestionDTO questionDTO=new QuestionDTO();
         BeanUtils.copyProperties(question,questionDTO);
@@ -80,7 +85,10 @@ public class QuestionService {
             QuestionExample questionExample = new QuestionExample();
             questionExample.createCriteria()
                     .andIdEqualTo(question.getId());
-            questionMapper.updateByExampleSelective(question, questionExample);
+            int update=questionMapper.updateByExampleSelective(question, questionExample);
+            if (update!=1){
+                throw new CustomizeException(CustomizaErrorCode.QUESTION_NOT_FOUND);
+            }
         }
     }
 }
