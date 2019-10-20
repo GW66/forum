@@ -9,8 +9,9 @@
 ##资料网站<br>
 [maven仓库](https://mvnrepository.com/)<br>
 [镜像资源](https://mirrors.tuna.tsinghua.edu.cn/)<br>
-[springboot文档](https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/)
-[Spring-boot 异常处理](https://www.jianshu.com/p/332f42fbabe2)
+[springboot文档](https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/)<br>
+[Spring-boot 异常处理](https://www.jianshu.com/p/332f42fbabe2)<br>
+[HTTP网页错误代码大全](https://blog.csdn.net/admin_8888/article/details/75270112)<br>
 
 ##项目使用工具<br>
 [springboot](https://spring.io/)<br>
@@ -20,7 +21,7 @@
 [mysql](https://www.mysql.com/)<br>
 [flyway](https://flywaydb.org/)<br>
 [lombok](https://projectlombok.org/)(有一些注解可以用)<br>
-[mybatis-generator](http://mybatis.org/generator/running/running.html)
+[mybatis-generator](http://mybatis.org/generator/running/running.html)<br>
 
 ##遇到的问题<br>
 springMVC中RequestParam注解中name和value两个属性的区别：<br>
@@ -72,3 +73,13 @@ mvn flyway:migrate<br>
 
 Mybatis generator执行命令<br>
 mvn -Dmybatis.generator.overwrite=true mybatis-generator:generate<br>
+
+
+SpringBoot 全局异常处理进阶：使用 @ControllerAdvice 对不同的 Controller 分别捕获异常并处理<br>
+[解决链接](https://blog.csdn.net/Colton_Null/article/details/88574923)
+
+    用@ControllerAdvice可以控制指定controller类
+    @ControllerAdvice(basePackages = {"RevertController.class"})
+    basePackages控制包里的所有类及调用的所有类
+    basePackageClasses控制类及其调用类
+    assignableTypes只控制该类

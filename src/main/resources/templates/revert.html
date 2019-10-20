@@ -20,10 +20,10 @@
                 <h4><span th:text="${questionDTO.title}"></span></h4><br>
                 <span class="text-color">
                     作者：<span th:text="${questionDTO.user.name}"></span>|
-                    <span th:text="${questionDTO.like_count}"></span>人关注|
-                    <span th:text="${questionDTO.comment_count}"></span>个回复|
-                    浏览<span th:text="${questionDTO.getView_count()}"></span>次|
-                    发布时间：<span th:text="${#dates.format(questionDTO.gmt_create,'yyyy-MM-dd HH:mm')}"></span>
+                    <span th:text="${questionDTO.likeCount}"></span>人关注|
+                    <span th:text="${questionDTO.commentCount}"></span>个回复|
+                    浏览<span th:text="${questionDTO.viewCount}"></span>次|
+                    发布时间：<span th:text="${#dates.format(questionDTO.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
                 </span>
             </div>
             <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 underline" th:if="${session.user!=null&&session.user.id==questionDTO.creator}">

@@ -41,9 +41,10 @@ public class ProfileController {
                             .andTokenEqualTo(cookie.getValue());
                     List<User> users = userMapper.selectByExample(userExample);
                     if (users.size()!=0){
-//            创建session
+//                      创建session
+                        user=users.get(0);
                         HttpSession session=request.getSession();
-                        session.setAttribute("user",users.get(0));
+                        session.setAttribute("user",user);
                     }
                     break;
                 }

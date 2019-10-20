@@ -15,8 +15,8 @@ public class RevertController {
     @GetMapping("/revert/{id}")
     public String revert(@PathVariable("id")Integer id,
                          Model model){
-        questionService.revertPage(id);
         QuestionDTO questionDTO=questionService.revertPage(id);
+        questionService.incView(id);
         model.addAttribute("questionDTO",questionDTO);
         return "revert";
     }

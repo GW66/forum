@@ -4,6 +4,7 @@ import com.gw.forum.forum.dto.PaginationDTO;
 import com.gw.forum.forum.dto.QuestionDTO;
 import com.gw.forum.forum.exception.CustomizaErrorCode;
 import com.gw.forum.forum.exception.CustomizeException;
+import com.gw.forum.forum.mapper.QuestionExtMapper;
 import com.gw.forum.forum.mapper.QuestionMapper;
 import com.gw.forum.forum.mapper.UserMapper;
 import com.gw.forum.forum.model.Question;
@@ -20,6 +21,8 @@ import java.util.List;
 public class QuestionService {
     @Autowired
     private QuestionMapper questionMapper;
+    @Autowired
+    private QuestionExtMapper questionExtMapper;
     @Autowired
     private UserMapper userMapper;
     public List<QuestionDTO> listpage(Integer page,Integer size){
@@ -43,7 +46,10 @@ public class QuestionService {
 
     public List<QuestionDTO> listpage(Integer creator,Integer page,Integer size){
         Integer startSize=(page-1)*size;
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(startSize, size));
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.createCriteria()
+                .andCreatorEqualTo(creator);
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(startSize, size));
         List<QuestionDTO> questionDTOList=new ArrayList<>();
         for(Question question:questionList){
             User user = userMapper.selectByPrimaryKey(question.getCreator());
@@ -63,7 +69,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public QuestionDTO revertPage(Integer id) {
+    public QuestionDTO revertPage(Integer id){
         Question question=questionMapper.selectByPrimaryKey(id);
         if (question==null){
             throw new CustomizeException(CustomizaErrorCode.QUESTION_NOT_FOUND);
@@ -90,5 +96,12 @@ public class QuestionService {
                 throw new CustomizeException(CustomizaErrorCode.QUESTION_NOT_FOUND);
             }
         }
+    }
+
+    public void incView(Integer id) {
+        Question question=new Question();
+        question.setId(id);
+        question.setViewCount(1);
+        questionExtMapper.incView(question);
     }
 }
