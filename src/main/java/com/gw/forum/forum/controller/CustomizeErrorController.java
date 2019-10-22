@@ -19,9 +19,9 @@ public class CustomizeErrorController implements ErrorController {
                                     Model model){
         HttpStatus status = getStatus(request);
         if (status.is4xxClientError()){
-            model.addAttribute("message",status+"你这个请求错了吧，要不要换一个姿势?");
+            model.addAttribute("message","你这个请求错了吧，要不要换一个姿势?");
         }else if (status.is5xxServerError()){
-            model.addAttribute("message",status+"服务太热啦，要不然等一下再来试试?");
+            model.addAttribute("message","服务太热啦，要不然等一下再来试试?");
         }
         return new ModelAndView("error"); // 返回其它错误的页面
     }

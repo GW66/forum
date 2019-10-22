@@ -40,3 +40,12 @@ body{
 .middle{
     vertical-align:middle;
 }
+.comment{
+    margin: 0px 0px 15px 0px;
+}
+.comment-button{
+    float: right;
+}
+.comment-img{
+    margin: 15px 0px 15px 0px;
+}

@@ -44,7 +44,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public List<QuestionDTO> listpage(Integer creator,Integer page,Integer size){
+    public List<QuestionDTO> listpage(Long creator, Integer page, Integer size){
         Integer startSize=(page-1)*size;
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria()
@@ -60,7 +60,7 @@ public class QuestionService {
         }
         return questionDTOList;
     }
-    public PaginationDTO showpage(Integer creator,Integer page, Integer size){
+    public PaginationDTO showpage(Long creator, Integer page, Integer size){
         QuestionExample questionExample = new QuestionExample();
         questionExample.createCriteria()
                 .andCreatorEqualTo(creator);
@@ -69,7 +69,7 @@ public class QuestionService {
         return paginationDTO;
     }
 
-    public QuestionDTO revertPage(Integer id){
+    public QuestionDTO revertPage(Long id){
         Question question=questionMapper.selectByPrimaryKey(id);
         if (question==null){
             throw new CustomizeException(CustomizaErrorCode.QUESTION_NOT_FOUND);
@@ -98,10 +98,22 @@ public class QuestionService {
         }
     }
 
-    public void incView(Integer id) {
+    public void incView(Long id) {
         Question question=new Question();
         question.setId(id);
-        question.setViewCount(1);
+        question.setViewCount(1L);
         questionExtMapper.incView(question);
+    }
+    public void incComment(Long id) {
+        Question question=new Question();
+        question.setId(id);
+        question.setCommentCount(1L);
+        questionExtMapper.incComment(question);
+    }
+    public void incLike(Long id) {
+        Question question=new Question();
+        question.setId(id);
+        question.setLikeCount(1L);
+        questionExtMapper.incLike(question);
     }
 }

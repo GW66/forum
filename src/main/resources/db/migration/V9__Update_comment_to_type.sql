@@ -1,0 +1,1 @@
+alter table comment modify type int not null;

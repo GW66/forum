@@ -11,6 +11,18 @@
     <script src="/js/jquery-3.4.1.min.js"></script>
     <script src="/js/bootstrap.min.js"></script>
 </head>
+<script type="application/javascript">
+    window.onload = function () {
+        var closable= window.localStorage.getItem("closable")
+        var url= window.localStorage.getItem("url")
+        if (closable =="true"){
+            window.open(url)
+            window.close()
+            window.localStorage.removeItem("closable")
+            window.localStorage.removeItem("url")
+        }
+    }
+</script>
 <body>
     <div th:insert="~{/other/navigation::user}"></div>
     <div class="container-fluid main">

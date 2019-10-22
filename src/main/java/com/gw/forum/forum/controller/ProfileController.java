@@ -55,7 +55,7 @@ public class ProfileController {
         }
         switch (action){
             case "question":
-                Integer creator= user.getId();
+                Long creator= user.getId();
 //        问题显示
                 List<QuestionDTO> questionDTOList=questionService.listpage(creator,page,size);
                 model.addAttribute("questionDtoList",questionDTOList);
