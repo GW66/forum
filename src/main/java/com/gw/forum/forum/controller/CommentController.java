@@ -1,6 +1,6 @@
 package com.gw.forum.forum.controller;
 
-import com.gw.forum.forum.dto.CommentDTO;
+import com.gw.forum.forum.dto.CommentCreateDTO;
 import com.gw.forum.forum.dto.ResultDTO;
 import com.gw.forum.forum.exception.CustomizaErrorCode;
 import com.gw.forum.forum.exception.CustomizeException;
@@ -24,13 +24,13 @@ public class CommentController {
     private QuestionService questionService;
     @ResponseBody
     @RequestMapping(value = "/comment",method = RequestMethod.POST)
-    public Object post(@RequestBody CommentDTO commentDTO,
+    public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
                        HttpServletRequest request){
         User user = (User)request.getSession().getAttribute("user");
         if (user==null){
             throw new CustomizeException(CustomizaErrorCode.NO_LOGIN);
         }
-        commentService.insert(commentDTO);
+        commentService.insert(commentCreateDTO,user);
         return ResultDTO.errorOf(CustomizaErrorCode.REQUEST_OK);
     }
 }

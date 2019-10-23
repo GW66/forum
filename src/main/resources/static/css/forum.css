@@ -49,3 +49,13 @@ body{
 .comment-img{
     margin: 15px 0px 15px 0px;
 }
+.comment-like{
+    color: #989898;
+    background-color: #f6f6f6;
+    border-color: #e3e3e3;
+}
+.comment-time{
+    color: #999999;
+    font-size: 15px;
+    margin-top: 10px;
+}
