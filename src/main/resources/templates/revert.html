@@ -18,28 +18,28 @@
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 all">
             <div th:insert="~{/other/question-detail::questionDTO}"></div>
-            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-                <div class="comment-img underline"  th:each="commentDTO:${commentDTOList}">
+            <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment-img underline" th:each="commentDTO:${commentDTOList}">
+                <div class="media">
                     <div class="media-left">
                         <a >
                             <img class="media-object img-rounded" th:src="${commentDTO.user.avatarUrl}" >
                         </a>
                     </div>
                     <div class="media-body">
-                        <a><h5 class="media-heading" th:text="${commentDTO.user.name}"></h5></a>
-                        <div class="panel-body">
-                            <pre th:text="${commentDTO.content}"></pre>
+                        <h5 class="media-heading">
+                            <span  th:text="${commentDTO.user.name}"></span>
+                        </h5>
+                        <div class="comment-content" th:text="${commentDTO.content}"></div>
+                        <div>
+                            <div class="btn-group">
+                                <span class="glyphicon glyphicon-thumbs-up btn comment-like" aria-hidden="true"><span class="comment-likes" th:text="${commentDTO.likeCount}"></span></span>
+                                <span class="glyphicon glyphicon-comment btn comment-like" aria-hidden="true" th:data-id="${commentDTO.id}" onclick="collapseComments(this)"></span>
+                            </div>
+                            <span class="pull-right comment-time" th:text="${#dates.format(commentDTO.gmtCreate,'yyyy-MM-dd')}"></span>
                         </div>
-                        <div class="btn-group">
-                            <button type="button" class="btn comment-like" aria-label="Left Align">
-                                <span class="glyphicon glyphicon-thumbs-up" aria-hidden="true"></span>
-                                <span th:text="${commentDTO.likeCount}"></span>
-                            </button>
-                            <button type="button" class="btn comment-like" aria-label="Left Align">
-                                <span class="glyphicon glyphicon-comment" aria-hidden="true"></span>
-                            </button>
+                        <div class="well comment-comment collapse" th:id="${'comment-'+commentDTO.id}">
+                            二级评论
                         </div>
-                        <span class="pull-right comment-time" th:text="${#dates.format(commentDTO.gmtCreate,'yyyy-MM-dd')}"></span>
                     </div>
                 </div>
             </div>

@@ -7,6 +7,7 @@ import com.gw.forum.forum.exception.CustomizeException;
 import com.gw.forum.forum.model.User;
 import com.gw.forum.forum.service.CommentService;
 import com.gw.forum.forum.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -29,6 +30,10 @@ public class CommentController {
         User user = (User)request.getSession().getAttribute("user");
         if (user==null){
             throw new CustomizeException(CustomizaErrorCode.NO_LOGIN);
+        }
+//        if (commentCreateDTO.getContent()==null||commentCreateDTO==null || commentCreateDTO.getContent()==""){
+        if (commentCreateDTO.getContent()==null||StringUtils.isBlank(commentCreateDTO.getContent())){
+            throw new CustomizeException(CustomizaErrorCode.COMMENT_IS_EMPTY);
         }
         commentService.insert(commentCreateDTO,user);
         return ResultDTO.errorOf(CustomizaErrorCode.REQUEST_OK);

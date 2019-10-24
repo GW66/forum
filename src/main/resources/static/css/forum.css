@@ -3,9 +3,7 @@ body{
 }
 .main{
     background-color: white;
-    margin-left: 100px;
-    margin-right: 100px;
-    margin-top: 30px;
+    margin: 30px 100px;
 }
 .btn-publish{
     float: right;
@@ -50,12 +48,27 @@ body{
     margin: 15px 0px 15px 0px;
 }
 .comment-like{
-    color: #989898;
-    background-color: #f6f6f6;
-    border-color: #e3e3e3;
+     color: #989898;
+     background-color: #f6f6f6;
+     border-color: #e3e3e3;
+ }
+.comment-comment-color{
+    color: #333333;
+}
+.comment-likes {
+    margin-left: 5px;
 }
 .comment-time{
     color: #999999;
     font-size: 15px;
     margin-top: 10px;
+}
+.comment-content{
+    margin:15px 0px;
+    display: block;
+    word-break: break-all;
+    word-wrap: break-word;
+}
+.comment-comment{
+    margin: 15px 0px 15px 0px;
 }

@@ -1,6 +1,10 @@
 function post() {
     var questionId =$("#question_id").val();
     var content =$("#comment_content").val();
+    if (!content){
+        alert("不能回复空内容！")
+        return;
+    }
     $.ajax({
         type:"POST",
         url:"/comment",
@@ -12,7 +16,7 @@ function post() {
         }),
         success:function(response){
             if(response.code==2000){
-                $("#comment_section").hide();
+                window.location.reload();
             }else {
                 if (response.code == 2003) {
                     var isAccepted =confirm(response.message);
@@ -27,8 +31,22 @@ function post() {
                     alert(response.message);
                 }
             }
-            console.log(response);
         },
         dataType:"json"
     });
+}
+
+function collapseComments(e) {
+    var id=e.getAttribute("data-id");
+    var comments= $("#comment-"+id);
+    var collapse=e.getAttribute("data-collapse")
+    if (!collapse) {
+        comments.addClass("in");
+        e.classList.add("comment-comment-color")
+        e.setAttribute("data-collapse","in");
+    }else {
+        comments.removeClass("in");
+        e.classList.remove("comment-comment-color")
+        e.removeAttribute("data-collapse");
+    }
 }

@@ -27,7 +27,9 @@ public class QuestionService {
     private UserMapper userMapper;
     public List<QuestionDTO> listpage(Integer page,Integer size){
         Integer startSize=(page-1)*size;
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(new QuestionExample(), new RowBounds(startSize, size));
+        QuestionExample questionExample = new QuestionExample();
+        questionExample.setOrderByClause("gmt_create desc");
+        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(startSize, size));
         List<QuestionDTO> questionDTOList=new ArrayList<>();
         for(Question question:questionList){
             User user = userMapper.selectByPrimaryKey(question.getCreator());
