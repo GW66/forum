@@ -1,7 +1,9 @@
 package com.gw.forum.forum.controller;
 
 import com.gw.forum.forum.dto.CommentCreateDTO;
+import com.gw.forum.forum.dto.CommentDTO;
 import com.gw.forum.forum.dto.ResultDTO;
+import com.gw.forum.forum.enums.CommentTypeEnum;
 import com.gw.forum.forum.exception.CustomizaErrorCode;
 import com.gw.forum.forum.exception.CustomizeException;
 import com.gw.forum.forum.model.User;
@@ -10,12 +12,10 @@ import com.gw.forum.forum.service.QuestionService;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 
 @Controller
 public class CommentController {
@@ -37,5 +37,11 @@ public class CommentController {
         }
         commentService.insert(commentCreateDTO,user);
         return ResultDTO.errorOf(CustomizaErrorCode.REQUEST_OK);
+    }
+    @ResponseBody
+    @RequestMapping(value = "/comment/{id}",method = RequestMethod.GET)
+    public ResultDTO<List<CommentDTO>> comment(@PathVariable("id") Long id){
+        List<CommentDTO> commentDTOList = commentService.listByTargetId(id, CommentTypeEnum.COMMENT);
+        return ResultDTO.data(commentDTOList);
     }
 }

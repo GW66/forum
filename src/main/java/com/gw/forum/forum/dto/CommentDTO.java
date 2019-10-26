@@ -11,6 +11,16 @@ public class CommentDTO {
     private Long gmtModified;
     private Long likeCount;
     private String content;
+    private Long commentCount;
+
+    public Long getCommentCount() {
+        return commentCount;
+    }
+
+    public void setCommentCount(Long commentCount) {
+        this.commentCount = commentCount;
+    }
+
     private User user;
 
     public Long getId() {

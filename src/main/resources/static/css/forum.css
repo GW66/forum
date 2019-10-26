@@ -72,3 +72,6 @@ body{
 .comment-comment{
     margin: 15px 0px 15px 0px;
 }
+.comment-all{
+    border: 2px solid #eeee;
+}

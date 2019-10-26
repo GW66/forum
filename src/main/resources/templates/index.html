@@ -14,12 +14,12 @@
 <script type="application/javascript">
     window.onload = function () {
         var closable= window.localStorage.getItem("closable")
-        var url= window.localStorage.getItem("url")
+        var url= window.localStorage.getItem("url1")
         if (closable =="true"){
             window.open(url)
             window.close()
             window.localStorage.removeItem("closable")
-            window.localStorage.removeItem("url")
+            window.localStorage.removeItem("url1")
         }
     }
 </script>

@@ -4,16 +4,21 @@
 <div th:fragment="questionDTO">
     <div id="comment_section">
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-            <div class="comment-img">
-                <div class="media-left">
-                    <a >
-                        <img class="media-object img-rounded" th:src="${questionDTO.user.avatarUrl}" >
-                    </a>
+            <li th:if="${session.user != null}">
+                <div class="comment-img">
+                    <div class="media-left">
+                        <a >
+                            <img class="media-object img-rounded" th:src="${session.user.avatarUrl}" >
+                        </a>
+                    </div>
+                    <div class="media-body middle">
+                        <a><h4 class="media-heading" th:text="${session.user.name}"></h4></a>
+                    </div>
                 </div>
-                <div class="media-body middle">
-                    <a><h4 class="media-heading" th:text="${questionDTO.user.name}"></h4></a>
-                </div>
-            </div>
+            </li>
+            <li th:if="${session.user == null}">
+                <h4>游客</h4>
+            </li>
         </div>
         <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12 comment">
             <input type="hidden" id="question_id" th:value="${questionDTO.id}">

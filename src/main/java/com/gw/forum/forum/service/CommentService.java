@@ -5,6 +5,7 @@ import com.gw.forum.forum.dto.CommentDTO;
 import com.gw.forum.forum.enums.CommentTypeEnum;
 import com.gw.forum.forum.exception.CustomizaErrorCode;
 import com.gw.forum.forum.exception.CustomizeException;
+import com.gw.forum.forum.mapper.CommentExtMapper;
 import com.gw.forum.forum.mapper.CommentMapper;
 import com.gw.forum.forum.mapper.QuestionMapper;
 import com.gw.forum.forum.mapper.UserMapper;
@@ -23,7 +24,11 @@ import java.util.stream.Collectors;
 @Service
 public class CommentService {
     @Autowired
+    private CommentExtMapper commentExtMapper;
+    @Autowired
     private CommentMapper commentMapper;
+    @Autowired
+    private CommentService commentService;
     @Autowired
     private QuestionMapper questionMapper;
     @Autowired
@@ -52,7 +57,7 @@ public class CommentService {
             if (question==null){
                 throw new CustomizeException(CustomizaErrorCode.QUESTION_NOT_FOUND);
             }
-            commentMapper.insert(comment);
+            commentMapper.insertSelective(comment);
             questionService.incComment(question.getId());
         } else {
 //            回复评论
@@ -60,10 +65,12 @@ public class CommentService {
             if (dbComment==null){
                 throw new CustomizeException(CustomizaErrorCode.COMMENT_NOT_FOUND);
             }
+            commentMapper.insertSelective(comment);
+            commentService.incComment(comment.getParentId());
         }
     }
 
-    public List<CommentDTO> listByQuestionId(Long id) {
+    public List<CommentDTO> listByTargetId(Long id, CommentTypeEnum commentTypeEnum) {
 //        List<CommentDTO> commentDTOList=new ArrayList<>();
 //        CommentExample commentExample = new CommentExample();
 //        commentExample.createCriteria()
@@ -78,7 +85,7 @@ public class CommentService {
 //        }
         CommentExample commentExample = new CommentExample();
         commentExample.createCriteria()
-                .andParentIdEqualTo(id).andTypeEqualTo(CommentTypeEnum.QUESTION.getType());
+                .andParentIdEqualTo(id).andTypeEqualTo(commentTypeEnum.getType());
         commentExample.setOrderByClause("gmt_create desc");
         List<Comment> commentList = commentMapper.selectByExample(commentExample);
         if (commentList.size()==0){
@@ -99,5 +106,17 @@ public class CommentService {
             return commentDTO;
         }).collect(Collectors.toList());
         return commentDTOList;
+    }
+    public void incComment(Long id) {
+        Comment comment=new Comment();
+        comment.setId(id);
+        comment.setCommentCount(1L);
+        commentExtMapper.incComment(comment);
+    }
+    public void incLike(Long id) {
+        Comment comment=new Comment();
+        comment.setId(id);
+        comment.setLikeCount(1L);
+        commentExtMapper.incLike(comment);
     }
 }
