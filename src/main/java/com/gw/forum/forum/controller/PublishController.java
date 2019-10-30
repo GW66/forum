@@ -1,12 +1,15 @@
 package com.gw.forum.forum.controller;
 
+import com.gw.forum.forum.cache.TagCache;
 import com.gw.forum.forum.dto.QuestionDTO;
+import com.gw.forum.forum.dto.TagDTO;
 import com.gw.forum.forum.mapper.QuestionMapper;
 import com.gw.forum.forum.mapper.UserMapper;
 import com.gw.forum.forum.model.Question;
 import com.gw.forum.forum.model.User;
 import com.gw.forum.forum.model.UserExample;
 import com.gw.forum.forum.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -28,7 +31,8 @@ public class PublishController {
     @Autowired
     QuestionService questionService;
     @GetMapping("/publish")
-    public String publish(){
+    public String publish(Model model){
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
     @PostMapping("/publish")
@@ -41,8 +45,14 @@ public class PublishController {
         model.addAttribute("title",title);
         model.addAttribute("description",description);
         model.addAttribute("tag",tag);
+        model.addAttribute("tags", TagCache.get());
         if(title==null || title=="" || description==null || description=="" || tag==null || tag==""){
             model.addAttribute("error","请完整填写信息");
+            return "publish";
+        }
+        String invalid=TagCache.filterInvalid(tag);
+        if (StringUtils.isNoneBlank(invalid)){
+            model.addAttribute("error","非法标签："+invalid);
             return "publish";
         }
         Question question=new Question();
@@ -80,6 +90,7 @@ public class PublishController {
         model.addAttribute("description",question.getDescription());
         model.addAttribute("tag",question.getTag());
         model.addAttribute("id",question.getId());
+        model.addAttribute("tags", TagCache.get());
         return "publish";
     }
 }

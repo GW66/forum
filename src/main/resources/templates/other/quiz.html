@@ -17,7 +17,24 @@
         </div>
         <div class="form-group comment">
             <label for="title">添加标签：</label>
-            <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag" placeholder="输入标签，以（，）分隔 ">
+            <input type="text" class="form-control" th:value="${tag}" id="tag" name="tag" autocapitalize="off" placeholder="输入标签，以（，）分隔 " autocomplete="off" onclick="showTag()">
+            <div id="select-tag" class="tag-show">
+                <!-- Nav tabs -->
+                <ul class="nav nav-tabs" role="tablist">
+                    <li role="presentation" th:each="taglist,taglistStat:${tags}" th:class="${taglistStat.first ? 'active':''}">
+                        <a th:href="'#'+${taglist.categoryName}" aria-controls="home" role="tab" data-toggle="tab" th:text="${taglist.categoryName}"></a></li>
+                </ul>
+                <!--&lt;!&ndash; Tab panes &ndash;&gt;-->
+                <div class="tab-content">
+                    <div role="tabpanel" th:each="taglist:${tags}" th:id="${taglist.categoryName}" th:class="${taglistStat.first ? 'active tab-pane':'tab-pane'}">
+                        <h4>
+                        <span class="label label-info question-tag btn"  th:each="selectTag:${taglist.tags}">
+                            <span class="glyphicon glyphicon-tags glyphicon " aria-hidden="true" onclick="writeTag(this)" th:text="${' '+selectTag}" th:data-tag="${selectTag}"></span>
+                        </span>
+                        </h4>
+                    </div>
+                </div>
+            </div>
         </div>
         <button type="submit" class="btn btn-success btn-publish">发布</button>
     </form>

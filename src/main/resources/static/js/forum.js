@@ -146,3 +146,31 @@ Date.prototype.format = function(fmt){
 
     return fmt;
 }
+function showTag() {
+    $("#select-tag").show();
+}
+function writeTag(e){
+    var value=e.getAttribute("data-tag");
+    var write=$("#tag").val();
+    if (write.indexOf(value)==-1) {
+        if (write){
+            $("#tag").val(write+","+value);
+        }else {
+            $("#tag").val(value);
+        }
+        // var html=$("<span/>",{
+        //     "class":"label label-info question-tag",
+        // });
+        // var html1=("<span/>",{
+        //     "class":"glyphicon glyphicon-tags glyphicon",
+        //     "aria-hidden":"true"
+        // });
+        // var html2=("<span/>",{
+        //     "onclick":"label label-info",
+        //     "text":write
+        // });
+        // html.append(html1);
+        // html.append(html2);
+        // writeAll.prepend(html);
+    }
+}

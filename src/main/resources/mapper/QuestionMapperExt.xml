@@ -27,4 +27,7 @@
     set like_count = like_count+#{likeCount,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+  <select id="selectRegexp" parameterType="com.gw.forum.forum.model.Question" resultMap="BaseResultMap">
+    select * from question where tag regexp #{tag,jdbcType=VARCHAR} and id != #{id,jdbcType=INTEGER}
+  </select>
 </mapper>

@@ -75,3 +75,25 @@ body{
 .comment-all{
     border: 2px solid #eeee;
 }
+.question-tag{
+    margin: 0px 5px 0px 0px;
+    font-size: 15px;
+    overflow: hidden;
+    display: inline flow-root list-item;
+}
+.associated{
+    list-style: none;
+    padding-left: 0px;
+    font-size: 12px;
+    line-height: 25px;
+}
+.img-width{
+    width: 100%;
+}
+.tag{
+    margin:40px 0 0 0;
+}
+.tag-show{
+    display: none;
+    margin-top: 10px;
+}

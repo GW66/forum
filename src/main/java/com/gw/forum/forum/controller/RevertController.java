@@ -23,10 +23,12 @@ public class RevertController {
     public String revert(@PathVariable("id") Long id,
                          Model model){
         QuestionDTO questionDTO=questionService.revertPage(id);
+        List<QuestionDTO> questionDTOTagList=questionService.selectRegexp(questionDTO);
         questionService.incView(id);
         List<CommentDTO> commentDTOList=commentService.listByTargetId(id, CommentTypeEnum.QUESTION);
         model.addAttribute("questionDTO",questionDTO);
         model.addAttribute("commentDTOList",commentDTOList);
+        model.addAttribute("questionDTOTagList",questionDTOTagList);
         return "revert";
     }
 }

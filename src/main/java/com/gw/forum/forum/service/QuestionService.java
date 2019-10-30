@@ -10,13 +10,17 @@ import com.gw.forum.forum.mapper.UserMapper;
 import com.gw.forum.forum.model.Question;
 import com.gw.forum.forum.model.QuestionExample;
 import com.gw.forum.forum.model.User;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
+
 @Service
 public class QuestionService {
     @Autowired
@@ -117,5 +121,25 @@ public class QuestionService {
         question.setId(id);
         question.setLikeCount(1L);
         questionExtMapper.incLike(question);
+    }
+
+    public List<QuestionDTO> selectRegexp(QuestionDTO questionDTO) {
+        String tag=questionDTO.getTag();
+        if (StringUtils.isBlank(tag)){
+            return null;
+        }
+//        String stringTag=tag.replaceAll(",","|");
+        String[] tags= StringUtils.split(tag,",");
+        String stringTag=Arrays.stream(tags).collect(Collectors.joining("|"));
+        Question question=new Question();
+        question.setId(questionDTO.getId());
+        question.setTag(stringTag);
+        List<Question> questionList = questionExtMapper.selectRegexp(question);
+        List<QuestionDTO> questionDTOList = questionList.stream().map(question1 -> {
+            QuestionDTO questionDTO1=new QuestionDTO();
+            BeanUtils.copyProperties(question1,questionDTO1);
+            return questionDTO1;
+        }).collect(Collectors.toList());
+        return questionDTOList;
     }
 }
