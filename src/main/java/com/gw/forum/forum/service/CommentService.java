@@ -3,12 +3,11 @@ package com.gw.forum.forum.service;
 import com.gw.forum.forum.dto.CommentCreateDTO;
 import com.gw.forum.forum.dto.CommentDTO;
 import com.gw.forum.forum.enums.CommentTypeEnum;
+import com.gw.forum.forum.enums.NotificationEnum;
+import com.gw.forum.forum.enums.NotificationStatusEnum;
 import com.gw.forum.forum.exception.CustomizaErrorCode;
 import com.gw.forum.forum.exception.CustomizeException;
-import com.gw.forum.forum.mapper.CommentExtMapper;
-import com.gw.forum.forum.mapper.CommentMapper;
-import com.gw.forum.forum.mapper.QuestionMapper;
-import com.gw.forum.forum.mapper.UserMapper;
+import com.gw.forum.forum.mapper.*;
 import com.gw.forum.forum.model.*;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +34,8 @@ public class CommentService {
     private QuestionService questionService;
     @Autowired
     private UserMapper userMapper;
+    @Autowired
+    private NotificationMapper notificationMapper;
     @Transactional
     public void insert(CommentCreateDTO commentCreateDTO, User user) {
         Comment comment = new Comment();
@@ -59,15 +60,39 @@ public class CommentService {
             }
             commentMapper.insertSelective(comment);
             questionService.incComment(question.getId());
+            createNotify(user, comment, question.getCreator(),NotificationEnum.REPLY_QUESTION,question.getId());
         } else {
 //            回复评论
             Comment dbComment = commentMapper.selectByPrimaryKey(comment.getParentId());
+            Question question = questionMapper.selectByPrimaryKey(dbComment.getParentId());
             if (dbComment==null){
                 throw new CustomizeException(CustomizaErrorCode.COMMENT_NOT_FOUND);
             }
             commentMapper.insertSelective(comment);
             commentService.incComment(comment.getParentId());
+            createNotify(user, comment, dbComment.getCommentator(),NotificationEnum.REPLY_COMMENT,question.getId());
         }
+    }
+
+    private void createNotify(User user, Comment comment, Long receiver,NotificationEnum notificationEnum,Long outerid) {
+        Notification notification=new Notification();
+//            用户id
+        notification.setNotifier(user.getId());
+//            用户姓名
+        notification.setNotifierName(user.getName());
+//            回复id
+        notification.setOuterid(outerid);
+//            回复内容
+        notification.setOuterTitle(comment.getContent());
+//            被回复人
+        notification.setReceiver(receiver);
+//            显示格式
+        notification.setType(notificationEnum.getStatus());
+//            读取状态
+        notification.setStatus(NotificationStatusEnum.UNREAD.getStatus());
+//            回复时间
+        notification.setGmtCreate(System.currentTimeMillis());
+        notificationMapper.insertSelective(notification);
     }
 
     public List<CommentDTO> listByTargetId(Long id, CommentTypeEnum commentTypeEnum) {

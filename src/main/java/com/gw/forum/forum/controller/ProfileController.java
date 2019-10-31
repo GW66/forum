@@ -1,10 +1,13 @@
 package com.gw.forum.forum.controller;
 
+import com.gw.forum.forum.dto.NotificationDTO;
 import com.gw.forum.forum.dto.PaginationDTO;
 import com.gw.forum.forum.dto.QuestionDTO;
+import com.gw.forum.forum.mapper.NotificationMapper;
 import com.gw.forum.forum.mapper.UserMapper;
 import com.gw.forum.forum.model.User;
 import com.gw.forum.forum.model.UserExample;
+import com.gw.forum.forum.service.NotificationService;
 import com.gw.forum.forum.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,48 +27,37 @@ public class ProfileController {
     private UserMapper userMapper;
     @Autowired
     private QuestionService questionService;
-    private User user=null;
+    @Autowired
+    private NotificationService notificationService;
     @GetMapping("/profile/{action}/")
     public String profile(@RequestParam(name = "page",defaultValue = "1")Integer page,
                           @RequestParam(name = "size",defaultValue = "6")Integer size,
                           @PathVariable("action") String action,
                           HttpServletRequest request,
                           Model model){
-//        获取Cookie
-        Cookie[] cookies=request.getCookies();
-        if(cookies!=null){
-            for(Cookie cookie:cookies){
-                if(cookie.getName().equals("token")){
-                    UserExample userExample = new UserExample();
-                    userExample.createCriteria()
-                            .andTokenEqualTo(cookie.getValue());
-                    List<User> users = userMapper.selectByExample(userExample);
-                    if (users.size()!=0){
-//                      创建session
-                        user=users.get(0);
-                        HttpSession session=request.getSession();
-                        session.setAttribute("user",user);
-                    }
-                    break;
-                }
-            }
-        }
-        if (cookies==null||user==null){
+        User user = (User)request.getSession().getAttribute("user");
+        if (user==null){
             return "redirect:/";
         }
+        Long creator= user.getId();
         switch (action){
             case "question":
-                Long creator= user.getId();
 //        问题显示
                 List<QuestionDTO> questionDTOList=questionService.listpage(creator,page,size);
                 model.addAttribute("questionDtoList",questionDTOList);
 //        分页显示
-                PaginationDTO paginationDTO=questionService.showpage(creator,page,size);
-                model.addAttribute("paginationDTO",paginationDTO);
+                PaginationDTO paginationDTOQuestion=questionService.showpage(creator,page,size);
+                model.addAttribute("paginationDTO",paginationDTOQuestion);
                 model.addAttribute("section","question");
                 model.addAttribute("sectionName","我的提问");
                 break;
             case "revert":
+//        问题显示
+                List<NotificationDTO> notificationDTOList=notificationService.listpage(creator,page,size);
+                model.addAttribute("notificationDTOList",notificationDTOList);
+//        分页显示
+                PaginationDTO paginationDTORevert=notificationService.showpage(creator,page,size);
+                model.addAttribute("paginationDTO",paginationDTORevert);
                 model.addAttribute("section","revert");
                 model.addAttribute("sectionName","最新回复");
                 break;

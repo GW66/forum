@@ -5,6 +5,7 @@ import com.gw.forum.forum.dto.QuestionDTO;
 import com.gw.forum.forum.mapper.UserMapper;
 import com.gw.forum.forum.model.User;
 import com.gw.forum.forum.model.UserExample;
+import com.gw.forum.forum.service.NotificationService;
 import com.gw.forum.forum.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,8 @@ public class IndexController {
     private UserMapper userMapper;
     @Autowired
     private QuestionService questionService;
+    @Autowired
+    private NotificationService notificationService;
     @GetMapping("/")
     public String index(@RequestParam(name = "page",defaultValue = "1")Integer page,
                         @RequestParam(name = "size",defaultValue = "6")Integer size,
@@ -43,6 +46,10 @@ public class IndexController {
                         //            创建session
                         HttpSession session=request.getSession();
                         session.setAttribute("user",users.get(0));
+                        //        统计未读数据
+                        Long unreadCount=notificationService.unreadCount(users.get(0).getId());
+                        session.setAttribute("unreadCount",unreadCount);
+
                     }else {
                         Cookie token=new Cookie("token",null);
                         token.setMaxAge(0);

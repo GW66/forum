@@ -20,6 +20,8 @@
                 <ul class="nav navbar-nav navbar-right">
                     <li>
                         <a href="/publish" th:text="发布"></a></li>
+                    <li th:if="${session.user != null}">
+                        <a href="/profile/revert/?page=1">通知  <span class="badge" th:text="${session.unreadCount}"></span></a></li>
                     <li th:if="${session.user == null}">
                         <a href="http://192.168.31.174/oauth/authorize?client_id=cc518f33e8f444004b8656c006ad516c5f1ee7d3537a6802be0b7d7c70af15ed&redirect_uri=http://localhost:8887/callback&response_type=code&state=active">登陆</a></li>
                     <li th:if="${session.user != null}" class="dropdown">

@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" >
+<body>
+<div th:fragment="notificationDTOList">
+    <div class="media page-header underline-question" th:each="notification:${notificationDTOList}">
+        <span class="text-color">
+            <h4>
+                <span class="media-heading" th:text="${notification.notifierName}"></span>
+                <span th:text="${notification.typeName}"></span>
+                <a th:href="@{'/notification/'+${notification.id}}">
+                    <span th:text="${notification.outerTitle}"></span>
+                </a>
+                <span class="label label-danger" th:if="${notification.status==1}">未读</span>
+            </h4>
+            <span class="pull-right" th:text="${#dates.format(notification.gmtCreate,'yyyy-MM-dd HH:mm')}"></span>
+        </span>
+    </div>
+</div>
