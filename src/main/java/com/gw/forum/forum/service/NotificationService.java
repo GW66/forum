@@ -25,6 +25,9 @@ public class NotificationService {
     NotificationMapper notificationMapper;
     @Autowired
     UserMapper userMapper;
+    /**
+     *所有通知信息
+     */
     public List<NotificationDTO> listpage(Long creator, Integer page, Integer size) {
         Integer startSize=(page-1)*size;
         NotificationExample notificationExample = new NotificationExample();
@@ -41,7 +44,9 @@ public class NotificationService {
         }
         return notificationDTOList;
     }
-
+    /**
+     *所有通知页码
+     */
     public PaginationDTO showpage(Long creator, Integer page, Integer size) {
         NotificationExample notificationExample = new NotificationExample();
         notificationExample.createCriteria()
@@ -50,7 +55,9 @@ public class NotificationService {
         PaginationDTO paginationDTO=new PaginationDTO(page,totalCount,size);
         return paginationDTO;
     }
-
+    /**
+     *统计未点击通知信息的个数
+     */
     public Long unreadCount(Long creator) {
         NotificationExample notificationExample = new NotificationExample();
         notificationExample.createCriteria()
@@ -59,7 +66,9 @@ public class NotificationService {
         long count = notificationMapper.countByExample(notificationExample);
         return count;
     }
-
+    /**
+     *读取信息后对数据的改变
+     */
     public NotificationDTO read(Long id, User user) {
         Notification notification=notificationMapper.selectByPrimaryKey(id);
         if (notification.getReceiver()!=user.getId()){

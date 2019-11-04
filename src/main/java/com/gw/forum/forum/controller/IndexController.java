@@ -7,6 +7,7 @@ import com.gw.forum.forum.model.User;
 import com.gw.forum.forum.model.UserExample;
 import com.gw.forum.forum.service.NotificationService;
 import com.gw.forum.forum.service.QuestionService;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -22,49 +23,24 @@ import java.util.List;
 @Controller
 public class IndexController {
     @Autowired
-    private UserMapper userMapper;
-    @Autowired
     private QuestionService questionService;
-    @Autowired
-    private NotificationService notificationService;
+
     @GetMapping("/")
     public String index(@RequestParam(name = "page",defaultValue = "1")Integer page,
                         @RequestParam(name = "size",defaultValue = "6")Integer size,
-                        HttpServletRequest request,
-                        HttpServletResponse response,
+                        @RequestParam(name = "search",required = false) String search,
                         Model model){
-//        获取Cookie
-        Cookie[] cookies=request.getCookies();
-        if(cookies!=null){
-            for(Cookie cookie:cookies){
-                if(cookie.getName().equals("token")){
-                    UserExample userExample = new UserExample();
-                    userExample.createCriteria()
-                            .andTokenEqualTo(cookie.getValue());
-                    List<User> users = userMapper.selectByExample(userExample);
-                    if (users.size()!=0){
-                        //            创建session
-                        HttpSession session=request.getSession();
-                        session.setAttribute("user",users.get(0));
-                        //        统计未读数据
-                        Long unreadCount=notificationService.unreadCount(users.get(0).getId());
-                        session.setAttribute("unreadCount",unreadCount);
-
-                    }else {
-                        Cookie token=new Cookie("token",null);
-                        token.setMaxAge(0);
-                        response.addCookie(token);
-                    }
-                    break;
-                }
-            }
-        }
 //        问题显示
-        List<QuestionDTO> questionDTOList=questionService.listpage(page,size);
+        List<QuestionDTO> questionDTOList=questionService.listpage(search,page,size);
         model.addAttribute("questionDtoList",questionDTOList);
 //        分页显示
-        PaginationDTO paginationDTO=questionService.showpage(page,size);
+        PaginationDTO paginationDTO=questionService.showpage(search,page,size);
         model.addAttribute("paginationDTO",paginationDTO);
+//        search传值
+        if (StringUtils.isBlank(search)) {
+            search=null;
+        }
+        model.addAttribute("search", search);
         return "index";
     }
 }

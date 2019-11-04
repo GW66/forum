@@ -1,5 +1,7 @@
 package com.gw.forum.forum.controller;
-
+/**
+ *用于回复通知
+ */
 import com.gw.forum.forum.dto.NotificationDTO;
 import com.gw.forum.forum.enums.NotificationEnum;
 import com.gw.forum.forum.model.User;

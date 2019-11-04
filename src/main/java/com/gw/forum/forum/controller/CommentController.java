@@ -1,5 +1,7 @@
 package com.gw.forum.forum.controller;
-
+/**
+ *用于添加回复数据
+ */
 import com.gw.forum.forum.dto.CommentCreateDTO;
 import com.gw.forum.forum.dto.CommentDTO;
 import com.gw.forum.forum.dto.ResultDTO;
@@ -21,8 +23,9 @@ import java.util.List;
 public class CommentController {
     @Autowired
     private CommentService commentService;
-    @Autowired
-    private QuestionService questionService;
+    /**
+     *用于添加回复数据
+     */
     @ResponseBody
     @RequestMapping(value = "/comment",method = RequestMethod.POST)
     public Object post(@RequestBody CommentCreateDTO commentCreateDTO,
@@ -38,6 +41,9 @@ public class CommentController {
         commentService.insert(commentCreateDTO,user);
         return ResultDTO.errorOf(CustomizaErrorCode.REQUEST_OK);
     }
+    /**
+     *用于加载二级评论
+     */
     @ResponseBody
     @RequestMapping(value = "/comment/{id}",method = RequestMethod.GET)
     public ResultDTO<List<CommentDTO>> comment(@PathVariable("id") Long id){

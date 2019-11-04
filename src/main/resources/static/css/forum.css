@@ -97,3 +97,7 @@ body{
     display: none;
     margin-top: 10px;
 }
+.text-center{
+    padding: 0px 0px 15px 0px;
+    text-align: center;
+}

@@ -1,5 +1,7 @@
 package com.gw.forum.forum.controller;
-
+/**
+ *用于呈现回复数据
+ */
 import com.gw.forum.forum.dto.CommentDTO;
 import com.gw.forum.forum.dto.QuestionDTO;
 import com.gw.forum.forum.enums.CommentTypeEnum;
@@ -19,6 +21,9 @@ public class RevertController {
     private QuestionService questionService;
     @Autowired
     private CommentService commentService;
+    /**
+     *用于加载一级评论
+     */
     @GetMapping("/revert/{id}")
     public String revert(@PathVariable("id") Long id,
                          Model model){

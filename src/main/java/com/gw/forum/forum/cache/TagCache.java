@@ -43,7 +43,7 @@ public class TagCache {
 
         TagDTO other=new TagDTO();
         other.setCategoryName("其他");
-        other.setTags(Arrays.asList("html5","react.js","搜索引擎","virtualenv","lucene","thymeleaf"));
+        other.setTags(Arrays.asList("html5","react.js","搜索引擎","virtualenv","lucene","thymeleaf","test","其他"));
         tagDTOList.add(other);
         return tagDTOList;
     }

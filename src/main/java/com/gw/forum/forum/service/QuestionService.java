@@ -2,6 +2,7 @@ package com.gw.forum.forum.service;
 
 import com.gw.forum.forum.dto.PaginationDTO;
 import com.gw.forum.forum.dto.QuestionDTO;
+import com.gw.forum.forum.dto.QuestionQueryDTO;
 import com.gw.forum.forum.exception.CustomizaErrorCode;
 import com.gw.forum.forum.exception.CustomizeException;
 import com.gw.forum.forum.mapper.QuestionExtMapper;
@@ -29,11 +30,22 @@ public class QuestionService {
     private QuestionExtMapper questionExtMapper;
     @Autowired
     private UserMapper userMapper;
-    public List<QuestionDTO> listpage(Integer page,Integer size){
+    public List<QuestionDTO> listpage(String search,Integer page,Integer size){
+//        用于页面搜索
+        if (StringUtils.isNotBlank(search)){
+//        String stringTag=tag.replaceAll(",","|");
+            String[] tags= StringUtils.split(search," ");
+            search=Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
         Integer startSize=(page-1)*size;
-        QuestionExample questionExample = new QuestionExample();
-        questionExample.setOrderByClause("gmt_create desc");
-        List<Question> questionList = questionMapper.selectByExampleWithRowbounds(questionExample, new RowBounds(startSize, size));
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        if (search==""){
+            search=null;
+        }
+        questionQueryDTO.setSearch(search);
+        questionQueryDTO.setPage(startSize);
+        questionQueryDTO.setSize(size);
+        List<Question> questionList = questionExtMapper.selectBySearch(questionQueryDTO);
         List<QuestionDTO> questionDTOList=new ArrayList<>();
         for(Question question:questionList){
             User user = userMapper.selectByPrimaryKey(question.getCreator());
@@ -44,8 +56,15 @@ public class QuestionService {
         }
         return questionDTOList;
     }
-    public PaginationDTO showpage(Integer page, Integer size){
-        Integer totalCount=(int) questionMapper.countByExample(new QuestionExample());
+    public PaginationDTO showpage(String search,Integer page, Integer size){
+        if (StringUtils.isNotBlank(search)){
+//        String stringTag=tag.replaceAll(",","|");
+            String[] tags= StringUtils.split(search," ");
+            search=Arrays.stream(tags).collect(Collectors.joining("|"));
+        }
+        QuestionQueryDTO questionQueryDTO = new QuestionQueryDTO();
+        questionQueryDTO.setSearch(search);
+        Integer totalCount=(int) questionExtMapper.countBySearch(questionQueryDTO);
         PaginationDTO paginationDTO=new PaginationDTO(page,totalCount,size);
         return paginationDTO;
     }

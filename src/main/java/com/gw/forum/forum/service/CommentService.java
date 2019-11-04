@@ -37,6 +37,7 @@ public class CommentService {
     @Autowired
     private NotificationMapper notificationMapper;
     @Transactional
+//    添加回复信息
     public void insert(CommentCreateDTO commentCreateDTO, User user) {
         Comment comment = new Comment();
         comment.setParentId(commentCreateDTO.getParentId());
@@ -75,6 +76,9 @@ public class CommentService {
     }
 
     private void createNotify(User user, Comment comment, Long receiver,NotificationEnum notificationEnum,Long outerid) {
+        if (user.getId()==receiver){
+            return;
+        }
         Notification notification=new Notification();
 //            用户id
         notification.setNotifier(user.getId());
