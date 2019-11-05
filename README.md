@@ -23,10 +23,14 @@
 [maven](http://maven.apache.org/)<br>
 [mysql](https://www.mysql.com/)<br>
 [flyway](https://flywaydb.org/)<br>
-[lombok](https://projectlombok.org/)(有一些注解可以用)<br>
+[lombok](https://projectlombok.org/)(有一些注解:@data-可以给实体类进行get、set|@Slf4j-用于指定方法的日志)<br>
+[commons-lang3](https://mvnrepository.com/artifact/org.apache.commons/commons-lang3)(方法StringUtils.isBlank(Object):用于判断为空返回true)<br>
 [mybatis-generator](http://mybatis.org/generator/running/running.html)<br>
 
 ##遇到的问题<br>
+一个知识点，用于把一个对象的属性值给另一个对象所相同的属性值<br>
+BeanUtils.copyProperties(question,questionDTO)<br>
+
 springMVC中RequestParam注解中name和value两个属性的区别：<br>
 源码中name的别名是value，value的别名是name,所以说name和value两个属性基本是等价的,都是获取从前台传入的参数<br>
 
