@@ -90,3 +90,7 @@ SpringBoot 全局异常处理进阶：使用 @ControllerAdvice 对不同的 Cont
     basePackages控制包里的所有类及调用的所有类
     basePackageClasses控制类及其调用类
     assignableTypes只控制该类
+
+获取正在访问的地址<br>
+
+    ${#httpServletRequest.getRequestURL()}
