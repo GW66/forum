@@ -79,7 +79,7 @@ body{
     margin: 0px 5px 0px 0px;
     font-size: 15px;
     overflow: hidden;
-    display: inline flow-root list-item;
+    display: inline-block;
 }
 .associated{
     list-style: none;
@@ -100,4 +100,19 @@ body{
 .text-center{
     padding: 0px 0px 15px 0px;
     text-align: center;
+}
+.logo-img{
+    width: 150px;
+    border-radius: 30%;
+}
+.logo-small{
+    padding: 4px;
+}
+.logo-center{
+    margin: 200px 500px;
+    text-align: center;
+}
+pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
 }

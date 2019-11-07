@@ -3,8 +3,8 @@ package com.gw.forum.forum.dto;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 @Component
-@ConfigurationProperties(prefix = "access")
-public class AccessTokenDTO {
+@ConfigurationProperties(prefix = "gitlab")
+public class GitlabAccessTokenDTO {
     private String client_id;
     private String client_secret;
     private String redirect_uri;

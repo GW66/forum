@@ -37,7 +37,7 @@
             <div class="list-group section">
                 <a href="/profile/question/?page=1" th:class="${section=='question'}?'active list-group-item':'list-group-item'">我的问题</a>
                 <a href="/profile/revert/?page=1" th:class="${section=='revert'}?'active list-group-item':'list-group-item'">最新回复
-                    <span class="badge" th:text="${session.unreadCount}">14</span>
+                    <span class="badge" th:text="${session.unreadCount}"></span>
                 </a>
             </div>
         </div>

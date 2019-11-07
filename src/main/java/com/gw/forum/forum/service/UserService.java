@@ -23,8 +23,8 @@ public class UserService {
         if (users.size()==0){
 //            创建用户
             user.setGmtCreate(System.currentTimeMillis());
-            user.setGmtModified(users.get(0).getGmtCreate());
-            userMapper.insert(user);
+            user.setGmtModified(user.getGmtCreate());
+            userMapper.insertSelective(user);
         }else {
 //            更新用户
             user.setGmtCreate(users.get(0).getGmtCreate());

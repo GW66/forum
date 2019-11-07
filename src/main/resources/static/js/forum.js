@@ -72,7 +72,7 @@ function collapseComments(e) {
                     }).append($("<span/>",{
                         "text":comment.user.name
                     }));
-                    var html22=$("<div/>",{
+                    var html22=$("<pre/>",{
                         "class":"comment-content",
                         "html":comment.content
                     });
@@ -173,4 +173,14 @@ function writeTag(e){
         // html.append(html2);
         // writeAll.prepend(html);
     }
+}
+//控制箭头事件
+function bigImg(x)
+{
+    x.classList.remove('logo-small')
+}
+
+function normalImg(x)
+{
+    x.classList.add('logo-small')
 }

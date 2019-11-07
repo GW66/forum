@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+<html xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>论坛</title>
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/bootstrap-theme.min.css">
+    <link rel="stylesheet" href="/css/forum.css">
+    <link rel="stylesheet" href="/css/prodile.css">
+    <script src="/js/jquery-3.4.1.min.js"></script>
+    <script src="/js/bootstrap.min.js"></script>
+    <script src="/js/forum.js"></script>
+</head>
+<body>
+    <div th:insert="~{/other/navigation::user}"></div>
+    <div class="container-fluid logo-center">
+        <div class="row">
+            <div class="col-sm-6 col-md-6">
+                <a href="http://192.168.31.174/oauth/authorize?client_id=cc518f33e8f444004b8656c006ad516c5f1ee7d3537a6802be0b7d7c70af15ed&redirect_uri=http://localhost:8887/gitlabcallback&response_type=code&state=active">
+                    <img onmouseover="bigImg(this)" onmouseout="normalImg(this)" class="logo-img logo-small" src="/img/gitlab.jpg">
+                    <div class="caption">
+                        <h3>gitlab登录</h3>
+                    </div>
+                </a>
+            </div>
+            <div class="col-sm-6 col-md-6">
+                <a href="https://github.com/login/oauth/authorize?client_id=56cd104b5a247273a2d5&redirect_uri=http://localhost:8887/githubcallback&scope=user&state=active">
+                    <img onmouseover="bigImg(this)" onmouseout="normalImg(this)" class="logo-img logo-small" src="/img/github.jpg">
+                    <div class="caption">
+                        <h3>github登录</h3>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div th:insert="~{/other/footer::foot}"></div>
+</body>
+</html>

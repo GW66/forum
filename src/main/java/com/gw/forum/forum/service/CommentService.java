@@ -61,7 +61,7 @@ public class CommentService {
             }
             commentMapper.insertSelective(comment);
             questionService.incComment(question.getId());
-            createNotify(user, comment, question.getCreator(),NotificationEnum.REPLY_QUESTION,question.getId());
+            createNotify(user, question.getTitle(), question.getCreator(),NotificationEnum.REPLY_QUESTION,question.getId());
         } else {
 //            回复评论
             Comment dbComment = commentMapper.selectByPrimaryKey(comment.getParentId());
@@ -71,11 +71,11 @@ public class CommentService {
             }
             commentMapper.insertSelective(comment);
             commentService.incComment(comment.getParentId());
-            createNotify(user, comment, dbComment.getCommentator(),NotificationEnum.REPLY_COMMENT,question.getId());
+            createNotify(user, dbComment.getContent(), dbComment.getCommentator(),NotificationEnum.REPLY_COMMENT,question.getId());
         }
     }
 
-    private void createNotify(User user, Comment comment, Long receiver,NotificationEnum notificationEnum,Long outerid) {
+    private void createNotify(User user, String outerTitle, Long receiver,NotificationEnum notificationEnum,Long outerid) {
         if (user.getId()==receiver){
             return;
         }
@@ -86,8 +86,8 @@ public class CommentService {
         notification.setNotifierName(user.getName());
 //            回复id
         notification.setOuterid(outerid);
-//            回复内容
-        notification.setOuterTitle(comment.getContent());
+//            回复对象
+        notification.setOuterTitle(outerTitle);
 //            被回复人
         notification.setReceiver(receiver);
 //            显示格式
