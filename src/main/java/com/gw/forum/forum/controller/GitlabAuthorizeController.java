@@ -5,6 +5,7 @@ import com.gw.forum.forum.dto.GitlabUser;
 import com.gw.forum.forum.model.User;
 import com.gw.forum.forum.provider.GitlabProvider;
 import com.gw.forum.forum.service.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.util.UUID;
 
 @Controller
+@Slf4j
 public class GitlabAuthorizeController {
     @Autowired
     private GitlabProvider gitlabProvider;
@@ -41,6 +43,8 @@ public class GitlabAuthorizeController {
             user.setAvatarUrl(gitlabUser.getAvatar_url());
 //            用户存放
             userService.userUpdate(user);
+        }else {
+            log.error("callback get gitlab error,{}",gitlabUser);
         }
         return "redirect:/";
     }

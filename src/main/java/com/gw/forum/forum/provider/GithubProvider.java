@@ -20,7 +20,6 @@ public class GithubProvider {
                 .build();
         try (Response response = client.newCall(request).execute()) {
             String string=response.body().string();
-            System.out.println(string);
 //            截取accessToken
             String[] split=string.split("&");
             String[] strings=split[0].split("=");

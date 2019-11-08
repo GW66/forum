@@ -8,10 +8,16 @@
         <!--增加limit功能-->
         <plugin type="org.mybatis.generator.plugins.RowBoundsPlugin"></plugin>
         <!--设置数据库信息-->
+        <!--<jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"-->
+                        <!--connectionURL="jdbc:mysql://localhost/forum?serverTimezone=GMT%2B8"-->
+                        <!--userId="root"-->
+                        <!--password="qwe789456321">-->
+            <!--<property name="nullCatalogMeansCurrent" value="true"/>-->
+        <!--</jdbcConnection>-->
         <jdbcConnection driverClass="com.mysql.cj.jdbc.Driver"
-                        connectionURL="jdbc:mysql://localhost/forum?serverTimezone=GMT%2B8"
+                        connectionURL="jdbc:mysql://120.27.244.8:3306/forum?serverTimezone=GMT%2B8"
                         userId="root"
-                        password="qwe789456321">
+                        password="Qwe-789456321">
             <property name="nullCatalogMeansCurrent" value="true"/>
         </jdbcConnection>
         <!--设置model-是否需要自己创建文件夹-是否剔除空格-->

@@ -4,7 +4,8 @@
 [论坛地址](http://localhost:8887)<br>
 [本地Gitlab](http://192.168.31.174/)<br>
 [本地GitlabAPI地址](http://192.168.31.174/help/api/oauth2.md)<br>
-[Gitlab用户信息](http://192.168.31.174/api/v4/user?access_token=jCEq22FxbCc2Jsr7uySM)
+[Gitlab用户信息](http://192.168.31.174/api/v4/user?access_token=jCEq22FxbCc2Jsr7uySM)<br>
+[GithubAPI地址](https://developer.github.com/apps/building-oauth-apps/authorizing-oauth-apps/)<br>
 
 ##资料网站<br>
 [maven仓库](https://mvnrepository.com/)<br>
@@ -12,8 +13,9 @@
 [springboot文档](https://docs.spring.io/spring-boot/docs/2.0.0.RC1/reference/htmlsingle/)<br>
 [Spring-boot 异常处理](https://www.jianshu.com/p/332f42fbabe2)<br>
 [HTTP网页错误代码大全](https://blog.csdn.net/admin_8888/article/details/75270112)<br>
-[springMVC官方文档](https://docs.spring.io/spring/docs/5.0.1.RELEASE/spring-framework-reference/web.html#spring-web)
-[图标素材库](https://www.iconfont.cn/)
+[springMVC官方文档](https://docs.spring.io/spring/docs/5.0.1.RELEASE/spring-framework-reference/web.html#spring-web)<br>
+[图标素材库](https://www.iconfont.cn/)<br>
+[服务器安装mysql帮助文档](https://help.aliyun.com/document_detail/116727.html?spm=5176.11065259.1996646101.searchclickresult.1c5c3a56sW5Vbi&aly_as=RG3yoaGF)<br>
 
 ##项目使用工具<br>
 [springboot](https://spring.io/)<br>
