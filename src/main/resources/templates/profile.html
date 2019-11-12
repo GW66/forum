@@ -16,7 +16,7 @@
     <script src="/editormd/lib/prettify.min.js"></script>
 </head>
 <body>
-<div th:insert="~{/other/navigation.html::user}"></div>
+<div th:insert="~{other/navigation.html::user}"></div>
 <div class="container-fluid main">
     <div class="row">
         <div class="col-lg-9 col-md-12 col-sm-12 col-xs-12 all">
@@ -24,12 +24,12 @@
                 <h2><span th:text="${sectionName}"></span></h2><br>
             </div>
             <div th:if="${section=='question'}">
-                <div th:insert="~{/other/question::questionDtoList}"></div>
-                <div th:insert="~{/other/pagination::paginationDTO}"></div>
+                <div th:insert="~{other/question::questionDtoList}"></div>
+                <div th:insert="~{other/pagination::paginationDTO}"></div>
             </div>
             <div th:if="${section=='revert'}">
-                <div th:insert="~{/other/notification::notificationDTOList}"></div>
-                <div th:insert="~{/other/pagination::paginationDTO}"></div>
+                <div th:insert="~{other/notification::notificationDTOList}"></div>
+                <div th:insert="~{other/pagination::paginationDTO}"></div>
             </div>
         </div>
         <div class="col-lg-3 col-md-12 col-sm-12 col-xs-12">
@@ -42,6 +42,6 @@
         </div>
     </div>
 </div>
-<div th:insert="~{/other/footer::foot}"></div>
+<div th:insert="~{other/footer::foot}"></div>
 </body>
 </html>

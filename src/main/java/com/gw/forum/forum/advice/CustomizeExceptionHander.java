@@ -30,7 +30,6 @@ public class CustomizeExceptionHander {
             ResultDTO resultDTO=null;
             if (ex instanceof CustomizeException){
                 resultDTO=ResultDTO.errorOf((CustomizeException)ex);
-
             }else{
                 new CustomizeErrorController().handleError(request, model);
             }
@@ -49,7 +48,7 @@ public class CustomizeExceptionHander {
             if (ex instanceof CustomizeException) {
                 model.addAttribute("message", ex.getMessage());
             } else {
-                new CustomizeErrorController().handleError(request, model);
+                model.addAttribute("message","服务太热啦!!!等一下再来试试?");
             }
             return new ModelAndView("error");
         }
