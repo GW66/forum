@@ -33,8 +33,8 @@ public class ALiYunProvider {
         OSS ossClient = new OSSClientBuilder().build(endpoint, accessKeyId, accessKeySecret);
 // 上传文件。
         ossClient.putObject(bucketName, fileName,inputStream);
-// 设置URL过期时间为1小时。
-        Date expiration = new Date(new Date().getTime() + 24 * 3600 * 1000);
+// 设置URL过期时间为10年。
+        Date expiration = new Date(new Date().getTime() + 365 * 24 * 3600 * 1000 + 365 * 24 * 3600 * 1000 + 365 * 24 * 3600 * 1000 + 365 * 24 * 3600 * 1000 + 365 * 24 * 3600 * 1000 + 365 * 24 * 3600 * 1000 + 365 * 24 * 3600 * 1000 + 365 * 24 * 3600 * 1000 + 365 * 24 * 3600 * 1000 + 365 * 24 * 3600 * 1000);
 // 生成以GET方法访问的签名URL，访客可以直接通过浏览器访问相关内容。
         URL url = ossClient.generatePresignedUrl(bucketName, fileName, expiration);
         String fileUrl=url.toString();
